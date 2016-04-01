@@ -80,10 +80,13 @@ define network::if::static (
   $metric = undef
 ) {
   # Validate our data
-  if ! is_ip_address($ipaddress) { fail("${ipaddress} is not an IP address.") }
-  if $ipv6address {
-    if ! is_ip_address($ipv6address) { fail("${ipv6address} is not an IPv6 address.") }
+  if defined($ipaddress) {
+    if ! is_ip_address($ipaddress) { fail("${ipaddress} is not an IP address.") }
   }
+  
+  if defined($ipv6address) {
+    if ! is_ip_address($ipv6address) { fail("${ipv6address} is not an IPv6 address.") }
+    }
 
   if ! is_mac_address($macaddress) {
     # Strip off any tailing VLAN (ie eth5.90 -> eth5).
